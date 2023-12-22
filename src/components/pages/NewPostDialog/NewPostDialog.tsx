@@ -6,13 +6,13 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
-interface NewPostDialogProps {
+type Props = {
   open: boolean;
   onClose: () => void;
   onPostCreate: (title: string, body: string) => void;
 }
 
-const NewPostDialog: React.FC<NewPostDialogProps> = ({ open, onClose, onPostCreate }) => {
+const NewPostDialog = (props: Props) => {
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
 
@@ -24,18 +24,18 @@ const NewPostDialog: React.FC<NewPostDialogProps> = ({ open, onClose, onPostCrea
     }
 
     // Call the parent component's function to create a new post
-    onPostCreate(title, body);
+    props.onPostCreate(title, body);
 
     // Reset form fields
     setTitle('');
     setBody('');
 
     // Close the dialog
-    onClose();
+    props.onClose();
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={props.open} onClose={props.onClose}>
       <DialogTitle>Create New Post</DialogTitle>
       <DialogContent>
         <TextField
@@ -58,7 +58,7 @@ const NewPostDialog: React.FC<NewPostDialogProps> = ({ open, onClose, onPostCrea
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={props.onClose}>Cancel</Button>
         <Button onClick={handleCreatePost} color="primary">
           Create Post
         </Button>
